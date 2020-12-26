@@ -60,26 +60,6 @@ string Stack::peek(){
 
 
 
-string evalPostfix(string pfix){
-    
-    
-    Stack s;
-    for (int i = 0; pfix[i]; ++i)  
-    {  
-        if(isdigit(pfix[i])||isalpha(pfix[i])){
-            s.push(string(1,pfix[i]));
-        }
-        else{
-            string a=s.pop();
-            string b=s.pop();
-            string exp='('+b+pfix[i]+a+')';
-            s.push(exp);
-
-        }
-    }  
-    return s.peek();
-}
-
 char* reverse1(char* str){
     for(int i=0;i<strlen(str)/2;i++)
     {
@@ -95,7 +75,7 @@ int main(){
     Stack s;
     cout<<"Enter prefix expression: ";
     cin>>a;
-    cout<<"The infix is: "<<evalPostfix(reverse1(a));
+    cout<<"The postfix is: "<<reverse1(a);
     return 0;
 
 }

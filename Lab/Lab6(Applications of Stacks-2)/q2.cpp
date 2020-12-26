@@ -1,5 +1,6 @@
 #include<iostream>
 #include <stdlib.h>
+#include<cstring>
 using namespace std;
 
 class Stack{
@@ -83,6 +84,7 @@ int evalPostfix(char* pfix){
         {  
             int val2 = s.pop();  
             int val1 = s.pop();  
+            
             switch (pfix[i])  
             {  
             case '+': s.push(val2+val1); break;  
@@ -94,12 +96,22 @@ int evalPostfix(char* pfix){
     }  
     return s.peek();
 }
+char* reverse1(char* str){
+    for(int i=0;i<strlen(str)/2;i++)
+    {
+        char temp=str[i];
+        str[i]=str[strlen(str)-i-1];
+        str[strlen(str)-i-1]=temp;
+    }
+    return str;
+}
 int main(){
     char a[50];
     Stack s;
-    cout<<"Enter postfix expression: ";
+    cout<<"Enter prefix expression: ";
     cin.get(a,50);
-    cout<<"The result is: "<<evalPostfix(a);
+
+    cout<<"The result is: "<<evalPostfix(reverse1(a));
     return 0;
 
 }
