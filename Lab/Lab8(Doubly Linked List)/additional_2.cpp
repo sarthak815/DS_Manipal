@@ -1,7 +1,6 @@
 #include<iostream>
 #include <stdlib.h>
 using namespace std;
-
 class dlist{
     private:
         int val;
@@ -43,39 +42,7 @@ class dlist{
             cout<<"\n";
         }
         
-        dlist* union1(dlist *a, dlist *b){
-            dlist *result = NULL;
-            dlist *t1=a, *t2=b;
-
-            while (t1!=NULL)
-            {
-                result = append(result,t1->val);
-                t1=t1->next;
-            }
-            while (t2!=NULL)
-            {
-                if(!ispresent(result,t2->val)){
-                    result = append(result,t2->val);
-                }
-                t2=t2->next;
-            }
-
-            return result;
-
-        }
-        dlist* intersection(dlist *a, dlist *b){
-            dlist *temp = NULL;
-            dlist *a1 = a;
-          
-            while(a1!=NULL){
-                if(ispresent(b,a1->val)&&!ispresent(temp,a1->val)){
-                    temp = append(temp,a1->val);
-                }
-                a1=a1->next;
-            }
-            return temp;
-
-        }
+        
         bool ispresent(dlist *a, int b){
             dlist *temp=a;
             while(temp!=NULL){
@@ -86,31 +53,108 @@ class dlist{
             }
             return 0;
         }
-};     
+
+        
+        dlist* sum1(dlist *d1, dlist *d2){
+            dlist *t1=NULL; 
+            dlist *t2=NULL, *d3, *d4=NULL;
+            int carry =0;
+            int sum;
+            while(d1->next!=NULL){
+            
+                d1=d1->next;
+            }
+            t1=d1;
+            while(d2->next!=NULL){
+               
+                d2 = d2->next;
+            }
+            t2=d2;
+            while(t2!=NULL||t1!=NULL){
+                if(t1!=NULL && t2!=NULL){
+                    int sum = t1->val+t2->val;
+                
+                    if(carry!=0){
+                        sum = sum+carry;
+                        carry=0;
+                    
+                    }
+                    if(sum>9){
+                        carry = sum/10;
+                        sum = sum%10;
+                        
+                    }
+                    t2=t2->prev;
+                    t1=t1->prev;
+
+                    d4 = append(d4,sum);
+                    
+                    sum = 0;
+
+                }
+                else if(t1==NULL&&t2!=NULL){
+                    int sum =t2->val;
+                        if(carry!=0){
+                            int sum = carry;
+                            carry=0;
+                        }
+                               
+                        t2=t2->prev;    
+                        d4 = append(d4,sum);
+                    
+                }
+                else if(t1!=NULL&&t2==NULL) {
+                        int sum=t1->val;
+                        if(carry!=0){
+                            int sum = sum+carry;
+                            carry=0;
+                        } 
+                        t1=t1->prev;                
+                        d4 = append(d4,sum);
+                    
+                }
+            }
+            if(carry!=0){
+                d4 = append(d4,carry);
+            }
+            return d4;
+        }
+        void display_reverse(dlist *a){
+            dlist *temp=a;
+            dlist *t;
+            while(temp->next!=NULL){
+                temp=temp->next;
+            }
+            t=temp;
+            while(t!=NULL){
+                cout<<t->val<<"";
+                t=t->prev;
+            }
+        }
+         
+    };     
 
 int main()
     {
-    dlist *d1=NULL, *d2=NULL, d3, *d4=NULL, *d5=NULL, *t1, *t2;
-    cout<<"Enter list 1(-1 to break):"<<endl;
+    dlist *d1=NULL, *d2=NULL, d3, *d4=NULL, *d5=NULL;
     int c;
     char a[100], b[100];
+    cout<<"Enter first number: ";
+
     cin.getline(a,100);
+    cout<<"Enter second number: ";
     cin.getline(b, 100);
     for(int i=0;a[i]!=NULL;i++){
-        d3.append(d1,a[i]);
+        int n = a[i]-'0';
+        d1 = d3.append(d1,n);
     }
-    for (i = 0; b[i]!=NULL;i++)
+    for (int i = 0; b[i]!=NULL;i++)
     {
-        d3.append(d2, b[i]);
+        int n = b[i]-'0';
+        d2 = d3.append(d2, n);
     }
-    while(d1->next!=NULL){
-        d1 = d1->next;
-    }
-    t1=d1;
-    while(d2->next!=NULL){
-        d2 = d2->next;
-    }
-    t2=d2;
-    while(t1->prev!=NULL||)
-    
+   
+    d4 = d3.sum1(d1,d2);
+    d3.display_reverse(d4);
+    return 0;
 }
